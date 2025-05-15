@@ -5,7 +5,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
-# include "../lib/MLX42/include/MLX42/MLX42.h"
+# include "../mlx42/include/MLX42/MLX42.h"
+# include "../mlx42/include/MLX42/MLX42_Int.h"
 
 # define WIDTH 800
 # define HEIGHT 600
