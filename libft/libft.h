@@ -20,7 +20,6 @@
 # include <stdlib.h>
 # include <stdarg.h>
 # include <ctype.h>
-# include <xlocale.h>
 # include <stdbool.h>
 # include <fcntl.h>
 

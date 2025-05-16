@@ -24,13 +24,9 @@
 # include "../libft.h"
 
 char	*get_next_line(int fd);
-char	*ft_strchr(char *s, size_t c);
 char	*ft_get_line(char **buffer);
-char	*ft_strjoin(char **buffer, char *list);
+char	*ft_strjoin_gnl(char **buffer, char *list);
 
 void	create_list(char **buffer, size_t fd);
-
-size_t	ft_strlen(const char *s);
-size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
 
 #endif

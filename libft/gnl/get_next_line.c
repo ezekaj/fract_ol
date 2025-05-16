@@ -55,7 +55,7 @@ void	create_list(char **buffer, size_t fd)
 			return ;
 		}
 		list[chars_read] = '\0';
-		ft_strjoin(buffer, list);
+		ft_strjoin_gnl(buffer, list);
 		free(list);
 	}
 }
@@ -94,7 +94,7 @@ char	*get_next_line(int fd)
 	//     }
 	//     while ((line = get_next_line(fd)) != NULL) {
 	//         printf("%s", line);
-	//         free(line); 
+	//         free(line);
 	//     }
 	//     close(fd);
 	//     return (0);

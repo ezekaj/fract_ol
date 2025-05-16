@@ -12,33 +12,7 @@
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strchr(char *s, size_t c)
-{
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return (NULL);
-	while (s[i])
-	{
-		if (s[i] == (char) c)
-			return ((char *)(s + i));
-		i++;
-	}
-	return (NULL);
-}
-
-char	*ft_strjoin(char **buffer, char *list)
+char	*ft_strjoin_gnl(char **buffer, char *list)
 {
 	size_t	i;
 	size_t	j;
@@ -62,20 +36,4 @@ char	*ft_strjoin(char **buffer, char *list)
 	free(*buffer);
 	*buffer = news;
 	return (*buffer);
-}
-
-size_t	ft_strlcpy(char *dst, char *src, size_t dstsize)
-{
-	size_t	i;
-
-	i = 0;
-	if (dstsize == 0)
-		return (ft_strlen(src));
-	while (i < dstsize - 1 && src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (ft_strlen(src));
 }
