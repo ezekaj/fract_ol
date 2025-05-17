@@ -26,9 +26,17 @@ brew install glfw cmake
 
 ## Installation
 
-1. Clone the repository:
+1. Clone the repository with submodules:
 ```bash
 git clone https://github.com/gasolineeater/fract_ol.git
+cd fract_ol
+git submodule init
+git submodule update
+```
+
+Alternatively, you can clone with submodules in one command:
+```bash
+git clone --recurse-submodules https://github.com/gasolineeater/fract_ol.git
 cd fract_ol
 ```
 
