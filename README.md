@@ -57,13 +57,18 @@ Run the program with:
 ./fractol [fractal_type]
 ```
 
-Where `fractal_type` is the type of fractal you want to display.
+Where `fractal_type` is the type of fractal you want to display:
+
+- `mandelbrot`: The Mandelbrot set
+- `julia [c_real] [c_imag]`: The Julia set with optional parameters (default: -0.7 0.27015)
 
 ## Controls
 
-- Mouse wheel: Zoom in/out
-- Arrow keys: Move around
-- ESC: Exit the program
+- **Mouse wheel**: Zoom in/out at mouse cursor position
+- **Arrow keys**: Move around
+- **+/-**: Zoom in/out from center
+- **R**: Reset view
+- **ESC**: Exit the program
 
 ## Project Structure
 

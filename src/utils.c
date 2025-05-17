@@ -41,8 +41,18 @@ void	init_fractol(t_fractol *fractol, int type, char **av)
 {
 	fractol->type = type;
 	fractol->zoom = 1.0;
-	fractol->offset_x = 0.0;
-	fractol->offset_y = 0.0;
+
+	// Set default offsets based on fractal type
+	if (type == MANDELBROT)
+	{
+		fractol->offset_x = -0.5;
+		fractol->offset_y = 0.0;
+	}
+	else
+	{
+		fractol->offset_x = 0.0;
+		fractol->offset_y = 0.0;
+	}
 
 	if (type == JULIA)
 	{
@@ -62,18 +72,41 @@ void	init_fractol(t_fractol *fractol, int type, char **av)
 void	handle_keys(mlx_key_data_t keydata, void *param)
 {
 	t_fractol	*fractol;
+	double		move_speed;
 
 	fractol = param;
+	move_speed = 0.1 / fractol->zoom;
+
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(fractol->mlx);
 	else if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
-		fractol->offset_y -= 0.1 / fractol->zoom;
+		fractol->offset_y -= move_speed;
 	else if (keydata.key == MLX_KEY_DOWN && keydata.action == MLX_PRESS)
-		fractol->offset_y += 0.1 / fractol->zoom;
+		fractol->offset_y += move_speed;
 	else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_PRESS)
-		fractol->offset_x -= 0.1 / fractol->zoom;
+		fractol->offset_x -= move_speed;
 	else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
-		fractol->offset_x += 0.1 / fractol->zoom;
+		fractol->offset_x += move_speed;
+	else if (keydata.key == MLX_KEY_EQUAL && keydata.action == MLX_PRESS)
+	{
+		// Zoom in with + key
+		fractol->zoom *= 1.1;
+	}
+	else if (keydata.key == MLX_KEY_MINUS && keydata.action == MLX_PRESS)
+	{
+		// Zoom out with - key
+		fractol->zoom /= 1.1;
+	}
+	else if (keydata.key == MLX_KEY_R && keydata.action == MLX_PRESS)
+	{
+		// Reset view with R key
+		fractol->zoom = 1.0;
+		if (fractol->type == MANDELBROT)
+			fractol->offset_x = -0.5;
+		else
+			fractol->offset_x = 0.0;
+		fractol->offset_y = 0.0;
+	}
 
 	if (keydata.action == MLX_PRESS)
 		fractal_render(fractol);
@@ -82,14 +115,37 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 void	handle_scroll(double xdelta, double ydelta, void *param)
 {
 	t_fractol	*fractol;
+	int32_t		mouse_x;
+	int32_t		mouse_y;
+	double		real_before;
+	double		imag_before;
+	double		real_after;
+	double		imag_after;
+	double		zoom_factor;
 
 	(void)xdelta;
 	fractol = param;
 
+	// Get mouse position
+	mlx_get_mouse_pos(fractol->mlx, &mouse_x, &mouse_y);
+
+	// Calculate the complex coordinates before zoom
+	map(mouse_x, mouse_y, &real_before, &imag_before, fractol);
+
+	// Apply zoom factor
 	if (ydelta > 0)
-		fractol->zoom *= 1.1;
-	else if (ydelta < 0)
-		fractol->zoom /= 1.1;
+		zoom_factor = 1.1;
+	else
+		zoom_factor = 0.9;
+
+	fractol->zoom *= zoom_factor;
+
+	// Calculate the complex coordinates after zoom
+	map(mouse_x, mouse_y, &real_after, &imag_after, fractol);
+
+	// Adjust offset to keep the point under the cursor fixed
+	fractol->offset_x += (real_before - real_after);
+	fractol->offset_y += (imag_before - imag_after);
 
 	fractal_render(fractol);
 }
