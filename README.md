@@ -65,11 +65,11 @@ Where `fractal_type` is the type of fractal you want to display:
 ## Controls
 
 - **Mouse wheel**: Zoom in/out at mouse cursor position
-- **+/-**: Zoom in/out from center
-- **Arrow keys**: Move around
+- **+/-**: Zoom in/out from center (works with both regular and numpad keys)
+- **Arrow keys** or **WASD**: Move around
 - **C**: Cycle through color schemes
 - **I/D**: Increase/Decrease maximum iterations
-- **R**: Reset view
+- **R**: Reset view (resets position, zoom, and iterations)
 - **ESC**: Exit the program
 
 ## Color Schemes
