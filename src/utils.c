@@ -1,5 +1,42 @@
 #include "../inc/fractol.h"
 
+static double	ft_atof(const char *str)
+{
+	double	result;
+	double	decimal;
+	int		sign;
+	int		i;
+
+	result = 0.0;
+	decimal = 0.0;
+	sign = 1;
+	i = 0;
+
+	if (str[i] == '-')
+	{
+		sign = -1;
+		i++;
+	}
+	else if (str[i] == '+')
+		i++;
+
+	while (str[i] >= '0' && str[i] <= '9')
+		result = result * 10 + (str[i++] - '0');
+
+	if (str[i] == '.')
+	{
+		i++;
+		decimal = 0.1;
+		while (str[i] >= '0' && str[i] <= '9')
+		{
+			result += (str[i++] - '0') * decimal;
+			decimal *= 0.1;
+		}
+	}
+
+	return (result * sign);
+}
+
 void	init_fractol(t_fractol *fractol, int type, char **av)
 {
 	fractol->type = type;
@@ -11,8 +48,8 @@ void	init_fractol(t_fractol *fractol, int type, char **av)
 	{
 		if (av[2] && av[3])
 		{
-			fractol->c_real = atof(av[2]);
-			fractol->c_imag = atof(av[3]);
+			fractol->c_real = ft_atof(av[2]);
+			fractol->c_imag = ft_atof(av[3]);
 		}
 		else
 		{

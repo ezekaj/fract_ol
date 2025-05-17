@@ -2,13 +2,20 @@
 
 static void	print_usage(void)
 {
-	write(1, "Usage: ./fractol [fractal_type] [params]\n\n", 42);
-	write(1, "Fractal types:\n", 15);
-	write(1, "  mandelbrot\n", 13);
-	write(1, "  julia [c_real] [c_imag]\n\n", 27);
-	write(1, "Examples:\n", 10);
-	write(1, "  ./fractol mandelbrot\n", 23);
-	write(1, "  ./fractol julia -0.7 0.27015\n", 31);
+	if (write(1, "Usage: ./fractol [fractal_type] [params]\n\n", 42) < 0)
+		exit(1);
+	if (write(1, "Fractal types:\n", 15) < 0)
+		exit(1);
+	if (write(1, "  mandelbrot\n", 13) < 0)
+		exit(1);
+	if (write(1, "  julia [c_real] [c_imag]\n\n", 27) < 0)
+		exit(1);
+	if (write(1, "Examples:\n", 10) < 0)
+		exit(1);
+	if (write(1, "  ./fractol mandelbrot\n", 23) < 0)
+		exit(1);
+	if (write(1, "  ./fractol julia -0.7 0.27015\n", 31) < 0)
+		exit(1);
 	exit(0);
 }
 
@@ -17,9 +24,9 @@ static int	parse_args(int ac, char **av)
 	if (ac < 2)
 		return (0);
 
-	if (ft_strncmp(av[1], "mandelbrot", 10) == 0)
+	if (strncmp(av[1], "mandelbrot", 10) == 0)
 		return (MANDELBROT);
-	else if (ft_strncmp(av[1], "julia", 5) == 0)
+	else if (strncmp(av[1], "julia", 5) == 0)
 		return (JULIA);
 
 	return (0);
