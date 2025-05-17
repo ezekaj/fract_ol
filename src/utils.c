@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/17 15:30:19 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/17 15:34:21 by ezekaj           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../inc/fractol.h"
 
 static double	ft_atof(const char *str)
@@ -23,6 +11,7 @@ static double	ft_atof(const char *str)
 	decimal = 0.0;
 	sign = 1;
 	i = 0;
+
 	if (str[i] == '-')
 	{
 		sign = -1;
@@ -30,8 +19,10 @@ static double	ft_atof(const char *str)
 	}
 	else if (str[i] == '+')
 		i++;
+
 	while (str[i] >= '0' && str[i] <= '9')
 		result = result * 10 + (str[i++] - '0');
+
 	if (str[i] == '.')
 	{
 		i++;
@@ -42,6 +33,7 @@ static double	ft_atof(const char *str)
 			decimal *= 0.1;
 		}
 	}
+
 	return (result * sign);
 }
 
@@ -49,6 +41,10 @@ void	init_fractol(t_fractol *fractol, int type, char **av)
 {
 	fractol->type = type;
 	fractol->zoom = 1.0;
+	fractol->color_scheme = COLOR_SCHEME_CLASSIC;
+	fractol->max_iter = DEFAULT_MAX_ITER;
+
+	// Set default offsets based on fractal type
 	if (type == MANDELBROT)
 	{
 		fractol->offset_x = -0.5;
@@ -59,6 +55,7 @@ void	init_fractol(t_fractol *fractol, int type, char **av)
 		fractol->offset_x = 0.0;
 		fractol->offset_y = 0.0;
 	}
+
 	if (type == JULIA)
 	{
 		if (av[2] && av[3])
@@ -81,6 +78,7 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 
 	fractol = param;
 	move_speed = 0.1 / fractol->zoom;
+
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(fractol->mlx);
 	else if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
@@ -93,14 +91,18 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 		fractol->offset_x += move_speed;
 	else if (keydata.key == MLX_KEY_EQUAL && keydata.action == MLX_PRESS)
 	{
-		fractol->zoom *= 1.1;
+		// Cycle to next color scheme with + key
+		fractol->color_scheme = (fractol->color_scheme + 1) % NUM_COLOR_SCHEMES;
 	}
 	else if (keydata.key == MLX_KEY_MINUS && keydata.action == MLX_PRESS)
 	{
-		fractol->zoom /= 1.1;
+		// Cycle to previous color scheme with - key
+		fractol->color_scheme = (fractol->color_scheme + NUM_COLOR_SCHEMES - 1)
+			% NUM_COLOR_SCHEMES;
 	}
 	else if (keydata.key == MLX_KEY_R && keydata.action == MLX_PRESS)
 	{
+		// Reset view with R key
 		fractol->zoom = 1.0;
 		if (fractol->type == MANDELBROT)
 			fractol->offset_x = -0.5;
@@ -108,6 +110,18 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 			fractol->offset_x = 0.0;
 		fractol->offset_y = 0.0;
 	}
+	else if (keydata.key == MLX_KEY_I && keydata.action == MLX_PRESS)
+	{
+		// Increase max iterations with I key
+		fractol->max_iter += 50;
+	}
+	else if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
+	{
+		// Decrease max iterations with D key (minimum 50)
+		if (fractol->max_iter > 50)
+			fractol->max_iter -= 50;
+	}
+
 	if (keydata.action == MLX_PRESS)
 		fractal_render(fractol);
 }
@@ -125,15 +139,43 @@ void	handle_scroll(double xdelta, double ydelta, void *param)
 
 	(void)xdelta;
 	fractol = param;
+
+	// Get mouse position
 	mlx_get_mouse_pos(fractol->mlx, &mouse_x, &mouse_y);
+
+	// Calculate the complex coordinates before zoom
 	map(mouse_x, mouse_y, &real_before, &imag_before, fractol);
+
+	// Apply zoom factor with limits to prevent numerical issues
 	if (ydelta > 0)
-		zoom_factor = 1.1;
+	{
+		// Zoom in - limit maximum zoom to prevent numerical issues
+		if (fractol->zoom < 1e10)
+			zoom_factor = 1.1;
+		else
+			zoom_factor = 1.0;
+	}
 	else
-		zoom_factor = 0.9;
+	{
+		// Zoom out - limit minimum zoom to prevent numerical issues
+		if (fractol->zoom > 0.1)
+			zoom_factor = 0.9;
+		else
+			zoom_factor = 1.0;
+	}
+
 	fractol->zoom *= zoom_factor;
+
+	// Calculate the complex coordinates after zoom
 	map(mouse_x, mouse_y, &real_after, &imag_after, fractol);
+
+	// Adjust offset to keep the point under the cursor fixed
 	fractol->offset_x += (real_before - real_after);
 	fractol->offset_y += (imag_before - imag_after);
+
+	// Adjust max iterations based on zoom level for better detail
+	if (ydelta > 0 && fractol->zoom > 10)
+		fractol->max_iter = DEFAULT_MAX_ITER + (int)(50 * log10(fractol->zoom));
+
 	fractal_render(fractol);
 }
