@@ -6,7 +6,7 @@
 /*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/17 22:34:43 by gasoline-ea      ###   ########.fr       */
+/*   Updated: 2025/05/17 23:23:35 by gasoline-ea      ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -42,7 +42,5 @@ void	get_fractal_name(int type, char *buffer)
 
 void	render_ui_text(t_fractol *fractol)
 {
-	// UI text elements have been removed
-	// The function is kept to maintain the UI toggle functionality
 	(void)fractol;
 }
