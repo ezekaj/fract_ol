@@ -79,6 +79,10 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 	fractol = param;
 	move_speed = 0.1 / fractol->zoom;
 
+	// Debug output for key presses
+	if (keydata.action == MLX_PRESS)
+		printf("Key pressed: %d\n", keydata.key);
+
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(fractol->mlx);
 	else if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
@@ -89,16 +93,32 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 		fractol->offset_x -= move_speed;
 	else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
 		fractol->offset_x += move_speed;
+	// Use page up/down for color cycling instead of +/-
+	else if (keydata.key == MLX_KEY_PAGE_UP && keydata.action == MLX_PRESS)
+	{
+		// Cycle to next color scheme
+		fractol->color_scheme = (fractol->color_scheme + 1) % NUM_COLOR_SCHEMES;
+		printf("Color scheme changed to: %d\n", fractol->color_scheme);
+	}
+	else if (keydata.key == MLX_KEY_PAGE_DOWN && keydata.action == MLX_PRESS)
+	{
+		// Cycle to previous color scheme
+		fractol->color_scheme = (fractol->color_scheme + NUM_COLOR_SCHEMES - 1)
+			% NUM_COLOR_SCHEMES;
+		printf("Color scheme changed to: %d\n", fractol->color_scheme);
+	}
+	// Use +/- for zooming
 	else if (keydata.key == MLX_KEY_EQUAL && keydata.action == MLX_PRESS)
 	{
-		// Cycle to next color scheme with + key
-		fractol->color_scheme = (fractol->color_scheme + 1) % NUM_COLOR_SCHEMES;
+		// Zoom in with + key
+		if (fractol->zoom < 1e10)
+			fractol->zoom *= 1.1;
 	}
 	else if (keydata.key == MLX_KEY_MINUS && keydata.action == MLX_PRESS)
 	{
-		// Cycle to previous color scheme with - key
-		fractol->color_scheme = (fractol->color_scheme + NUM_COLOR_SCHEMES - 1)
-			% NUM_COLOR_SCHEMES;
+		// Zoom out with - key
+		if (fractol->zoom > 0.1)
+			fractol->zoom /= 1.1;
 	}
 	else if (keydata.key == MLX_KEY_R && keydata.action == MLX_PRESS)
 	{

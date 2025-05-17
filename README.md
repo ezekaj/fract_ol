@@ -65,10 +65,21 @@ Where `fractal_type` is the type of fractal you want to display:
 ## Controls
 
 - **Mouse wheel**: Zoom in/out at mouse cursor position
-- **Arrow keys**: Move around
 - **+/-**: Zoom in/out from center
+- **Arrow keys**: Move around
+- **Page Up/Down**: Cycle through color schemes
+- **I/D**: Increase/Decrease maximum iterations
 - **R**: Reset view
 - **ESC**: Exit the program
+
+## Color Schemes
+
+The program includes several color schemes that can be cycled through using the Page Up and Page Down keys:
+- Classic: Purple and white gradient
+- Blue: Blue-dominant gradient
+- Fire: Red, orange, and yellow gradient resembling flames
+- Psychedelic: Rainbow cycling colors
+- Grayscale: Black and white gradient
 
 ## Project Structure
 
