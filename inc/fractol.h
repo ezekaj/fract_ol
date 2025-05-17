@@ -43,6 +43,9 @@ typedef struct s_fractol
 	int			show_ui;
 	int			julia_locked;
 	int			use_threads;
+	int			animate_colors;
+	double		animation_time;
+	double		animation_speed;
 }	t_fractol;
 
 typedef struct s_coord
@@ -76,14 +79,17 @@ int		color_classic(int i, int max_i);
 int		color_blue(int i, int max_i);
 int		color_fire(int i, int max_i);
 int		color_psychedelic(int i, int max_i);
+int		color_psychedelic_animated(int i, int max_i, double time);
 int		color_grayscale(int i, int max_i);
 int		colors(int i, int max_i, int color_scheme);
+int		colors_animated(int i, int max_i, int color_scheme, double time);
 
 /* Smooth coloring functions */
 double	calculate_smooth_value(double z_real, double z_imag, int iter, int max_i);
 int		smooth_color_classic(double smooth_iter, int max_i);
 int		smooth_color_fire(double smooth_iter, int max_i);
 int		smooth_color_psychedelic(double smooth_iter, int max_i);
+int		smooth_color_psychedelic_animated(double smooth_iter, int max_i, double time);
 
 /* Input handling functions */
 void	handle_navigation_keys(t_fractol *fractol, keys_t key, double move_speed);
@@ -102,6 +108,10 @@ void	get_coordinates(t_fractol *fractol, int32_t mouse_x, int32_t mouse_y,
 			t_coord *coord);
 void	adjust_view(t_fractol *fractol, t_coord *coord, double ydelta);
 void	handle_scroll(double xdelta, double ydelta, void *param);
+
+/* Animation functions */
+void	animation_loop(void *param);
+void	handle_animation_keys(t_fractol *fractol, keys_t key);
 
 /* Initialization and utility functions */
 int		parse_sign(const char *str, int *i);

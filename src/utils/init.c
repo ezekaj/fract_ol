@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/17 15:31:40 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/05/17 23:05:08 by gasoline-ea      ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../inc/fractol.h"
 
@@ -18,6 +18,13 @@ void	set_default_values(t_fractol *fractol, int type)
 	fractol->zoom = 1.0;
 	fractol->color_scheme = COLOR_SCHEME_CLASSIC;
 	fractol->max_iter = DEFAULT_MAX_ITER;
+	fractol->smooth_color = 0;
+	fractol->show_ui = 1;
+	fractol->julia_locked = 1;
+	fractol->use_threads = 0;
+	fractol->animate_colors = 0;
+	fractol->animation_time = 0.0;
+	fractol->animation_speed = 0.05;
 }
 
 void	set_offsets(t_fractol *fractol, int type)
@@ -25,6 +32,11 @@ void	set_offsets(t_fractol *fractol, int type)
 	if (type == MANDELBROT)
 	{
 		fractol->offset_x = -0.5;
+		fractol->offset_y = 0.0;
+	}
+	else if (type == TRICORN)
+	{
+		fractol->offset_x = 0.0;
 		fractol->offset_y = 0.0;
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/17 22:49:48 by gasoline-ea      ###   ########.fr       */
+/*   Updated: 2025/05/17 23:04:01 by gasoline-ea      ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -82,12 +82,16 @@ void	render_row(int y, t_fractol *fractol)
 
 			double smooth_i = calculate_smooth_value(z_real, z_imag, i, fractol->max_iter);
 
-			if (fractol->color_scheme == COLOR_SCHEME_CLASSIC)
+			if (fractol->animate_colors && fractol->color_scheme == COLOR_SCHEME_PSYCHEDELIC)
+				color = smooth_color_psychedelic_animated(smooth_i, fractol->max_iter, fractol->animation_time);
+			else if (fractol->color_scheme == COLOR_SCHEME_CLASSIC)
 				color = smooth_color_classic(smooth_i, fractol->max_iter);
 			else if (fractol->color_scheme == COLOR_SCHEME_FIRE)
 				color = smooth_color_fire(smooth_i, fractol->max_iter);
 			else if (fractol->color_scheme == COLOR_SCHEME_PSYCHEDELIC)
 				color = smooth_color_psychedelic(smooth_i, fractol->max_iter);
+			else if (fractol->animate_colors && fractol->color_scheme == COLOR_SCHEME_PSYCHEDELIC)
+				color = color_psychedelic_animated(i, fractol->max_iter, fractol->animation_time);
 			else
 				color = colors(i, fractol->max_iter, fractol->color_scheme);
 		}

@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   key_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/17 15:31:40 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/05/17 23:04:32 by gasoline-ea      ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../inc/fractol.h"
 
@@ -55,6 +55,16 @@ void	handle_special_keys(t_fractol *fractol, keys_t key)
 		fractol->max_iter += 50;
 	else if (key == MLX_KEY_D && fractol->max_iter > 50)
 		fractol->max_iter -= 50;
+	else if (key == MLX_KEY_S)
+		fractol->smooth_color = !fractol->smooth_color;
+	else if (key == MLX_KEY_U)
+		fractol->show_ui = !fractol->show_ui;
+	else if (key == MLX_KEY_T)
+		fractol->use_threads = !fractol->use_threads;
+	else if (key == MLX_KEY_L && fractol->type == JULIA)
+		fractol->julia_locked = !fractol->julia_locked;
+	else
+		handle_animation_keys(fractol, key);
 }
 
 void	handle_keys(mlx_key_data_t keydata, void *param)
@@ -69,5 +79,9 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 	handle_navigation_keys(fractol, keydata.key, move_speed);
 	handle_zoom_keys(fractol, keydata.key);
 	handle_special_keys(fractol, keydata.key);
-	fractal_render(fractol);
+
+	if (fractol->use_threads)
+		threaded_fractal_render(fractol);
+	else
+		fractal_render(fractol);
 }
