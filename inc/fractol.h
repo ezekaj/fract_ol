@@ -16,6 +16,7 @@
 
 # define MANDELBROT 1
 # define JULIA 2
+# define TRICORN 3
 
 # define COLOR_SCHEME_CLASSIC 0
 # define COLOR_SCHEME_BLUE 1
@@ -38,6 +39,10 @@ typedef struct s_fractol
 	double		offset_y;
 	int			color_scheme;
 	int			max_iter;
+	int			smooth_color;
+	int			show_ui;
+	int			julia_locked;
+	int			use_threads;
 }	t_fractol;
 
 typedef struct s_coord
@@ -52,12 +57,19 @@ typedef struct s_coord
 /* Fractal calculation functions */
 int		mandelbrot(double real, double imag, int max_i);
 int		julia(double real, double imag, double c_real, double c_imag, int max_i);
+int		tricorn(double real, double imag, int max_i);
 
 /* Rendering functions */
 void	map(int x, int y, double *real, double *imag, t_fractol *fractol);
 int		calculate_pixel(double real, double imag, t_fractol *fractol);
 void	render_row(int y, t_fractol *fractol);
 void	fractal_render(t_fractol *fractol);
+void	threaded_fractal_render(t_fractol *fractol);
+
+/* UI functions */
+void	get_color_scheme_name(int color_scheme, char *buffer);
+void	get_fractal_name(int type, char *buffer);
+void	render_ui_text(t_fractol *fractol);
 
 /* Color functions */
 int		color_classic(int i, int max_i);
@@ -67,11 +79,22 @@ int		color_psychedelic(int i, int max_i);
 int		color_grayscale(int i, int max_i);
 int		colors(int i, int max_i, int color_scheme);
 
+/* Smooth coloring functions */
+double	calculate_smooth_value(double z_real, double z_imag, int iter, int max_i);
+int		smooth_color_classic(double smooth_iter, int max_i);
+int		smooth_color_fire(double smooth_iter, int max_i);
+int		smooth_color_psychedelic(double smooth_iter, int max_i);
+
 /* Input handling functions */
 void	handle_navigation_keys(t_fractol *fractol, keys_t key, double move_speed);
 void	handle_zoom_keys(t_fractol *fractol, keys_t key);
 void	handle_special_keys(t_fractol *fractol, keys_t key);
 void	handle_keys(mlx_key_data_t keydata, void *param);
+
+/* Mouse handling functions */
+void	update_julia_params(t_fractol *fractol);
+void	handle_mouse_click(mouse_key_t button, action_t action,
+		modifier_key_t mods, void *param);
 
 /* Scroll handling functions */
 double	calculate_zoom_factor(t_fractol *fractol, double ydelta);

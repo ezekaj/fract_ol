@@ -1,30 +1,45 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   color_schemes2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/17 15:31:40 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/05/17 22:50:06 by gasoline-ea      ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../inc/fractol.h"
 
 int	color_psychedelic(int i, int max_i)
 {
-	int	r;
-	int	g;
-	int	b;
-	int	scale;
+	int		r;
+	int		g;
+	int		b;
+	double	t;
+	double	phase;
 
 	if (i == max_i)
 		return (0x000000FF);
-	scale = (i * 300) / max_i;
-	r = (scale % 256);
-	g = ((scale + 85) % 256);
-	b = ((scale + 170) % 256);
+
+	// Normalize iteration count to [0, 1]
+	t = (double)i / max_i;
+
+	// Create a phase value for wave-like patterns
+	// Using integer-based calculations for non-smooth version
+	phase = t * 15.0;
+
+	// Use sinusoidal patterns with different phases for each channel
+	r = (int)(127.5 + 127.5 * sin(phase));
+	g = (int)(127.5 + 127.5 * sin(phase + 2.094)); // 120 degrees phase shift
+	b = (int)(127.5 + 127.5 * sin(phase + 4.188)); // 240 degrees phase shift
+
+	// Ensure values are within valid range
+	r = (r < 0) ? 0 : (r > 255) ? 255 : r;
+	g = (g < 0) ? 0 : (g > 255) ? 255 : g;
+	b = (b < 0) ? 0 : (b > 255) ? 255 : b;
+
 	return ((r << 24) | (g << 16) | (b << 8) | 0xFF);
 }
 
