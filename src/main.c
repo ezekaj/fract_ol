@@ -11,7 +11,9 @@ int	main(int ac, char **av)
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 	t_fractol	fractol;
-	
+
+	(void)av; // Suppress unused parameter warning
+
 	if (ac >= 2)
 	{
 		mlx = mlx_init(WIDTH, HEIGHT, "Fractol", 1);
