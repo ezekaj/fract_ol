@@ -6,7 +6,7 @@
 /*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/17 23:23:08 by gasoline-ea      ###   ########.fr       */
+/*   Updated: 2025/05/17 23:33:39 by gasoline-ea      ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -79,21 +79,41 @@ void	render_row(int y, t_fractol *fractol)
 				}
 			}
 			double smooth_i = calculate_smooth_value(z_real, z_imag, i, fractol->max_iter);
-			if (fractol->color_scheme == COLOR_SCHEME_PSYCHEDELIC && fractol->animate_colors)
-				color = smooth_color_psychedelic_animated(smooth_i, fractol->max_iter, fractol->animation_time);
-			else if (fractol->color_scheme == COLOR_SCHEME_CLASSIC)
-				color = smooth_color_classic(smooth_i, fractol->max_iter);
-			else if (fractol->color_scheme == COLOR_SCHEME_FIRE)
-				color = smooth_color_fire(smooth_i, fractol->max_iter);
-			else if (fractol->color_scheme == COLOR_SCHEME_PSYCHEDELIC)
-				color = smooth_color_psychedelic(smooth_i, fractol->max_iter);
+			if (fractol->animate_colors)
+			{
+				if (fractol->color_scheme == COLOR_SCHEME_CLASSIC)
+					color = smooth_color_classic_animated(smooth_i, fractol->max_iter, fractol->animation_time);
+				else if (fractol->color_scheme == COLOR_SCHEME_BLUE)
+					color = smooth_color_blue_animated(smooth_i, fractol->max_iter, fractol->animation_time);
+				else if (fractol->color_scheme == COLOR_SCHEME_FIRE)
+					color = smooth_color_fire_animated(smooth_i, fractol->max_iter, fractol->animation_time);
+				else if (fractol->color_scheme == COLOR_SCHEME_PSYCHEDELIC)
+					color = smooth_color_psychedelic_animated(smooth_i, fractol->max_iter, fractol->animation_time);
+				else if (fractol->color_scheme == COLOR_SCHEME_GRAYSCALE)
+					color = smooth_color_grayscale_animated(smooth_i, fractol->max_iter, fractol->animation_time);
+				else
+					color = colors(i, fractol->max_iter, fractol->color_scheme);
+			}
 			else
-				color = colors(i, fractol->max_iter, fractol->color_scheme);
+			{
+				if (fractol->color_scheme == COLOR_SCHEME_CLASSIC)
+					color = smooth_color_classic(smooth_i, fractol->max_iter);
+				else if (fractol->color_scheme == COLOR_SCHEME_BLUE)
+					color = smooth_color_blue(smooth_i, fractol->max_iter);
+				else if (fractol->color_scheme == COLOR_SCHEME_FIRE)
+					color = smooth_color_fire(smooth_i, fractol->max_iter);
+				else if (fractol->color_scheme == COLOR_SCHEME_PSYCHEDELIC)
+					color = smooth_color_psychedelic(smooth_i, fractol->max_iter);
+				else if (fractol->color_scheme == COLOR_SCHEME_GRAYSCALE)
+					color = smooth_color_grayscale(smooth_i, fractol->max_iter);
+				else
+					color = colors(i, fractol->max_iter, fractol->color_scheme);
+			}
 		}
 		else
 		{
-			if (fractol->color_scheme == COLOR_SCHEME_PSYCHEDELIC && fractol->animate_colors)
-				color = color_psychedelic_animated(i, fractol->max_iter, fractol->animation_time);
+			if (fractol->animate_colors)
+				color = colors_animated(i, fractol->max_iter, fractol->color_scheme, fractol->animation_time);
 			else
 				color = colors(i, fractol->max_iter, fractol->color_scheme);
 		}

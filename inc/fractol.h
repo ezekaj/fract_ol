@@ -79,17 +79,27 @@ int		color_classic(int i, int max_i);
 int		color_blue(int i, int max_i);
 int		color_fire(int i, int max_i);
 int		color_psychedelic(int i, int max_i);
-int		color_psychedelic_animated(int i, int max_i, double time);
 int		color_grayscale(int i, int max_i);
+int		color_classic_animated(int i, int max_i, double time);
+int		color_blue_animated(int i, int max_i, double time);
+int		color_fire_animated(int i, int max_i, double time);
+int		color_psychedelic_animated(int i, int max_i, double time);
+int		color_grayscale_animated(int i, int max_i, double time);
 int		colors(int i, int max_i, int color_scheme);
 int		colors_animated(int i, int max_i, int color_scheme, double time);
 
 /* Smooth coloring functions */
 double	calculate_smooth_value(double z_real, double z_imag, int iter, int max_i);
 int		smooth_color_classic(double smooth_iter, int max_i);
+int		smooth_color_blue(double smooth_iter, int max_i);
 int		smooth_color_fire(double smooth_iter, int max_i);
 int		smooth_color_psychedelic(double smooth_iter, int max_i);
+int		smooth_color_grayscale(double smooth_iter, int max_i);
+int		smooth_color_classic_animated(double smooth_iter, int max_i, double time);
+int		smooth_color_blue_animated(double smooth_iter, int max_i, double time);
+int		smooth_color_fire_animated(double smooth_iter, int max_i, double time);
 int		smooth_color_psychedelic_animated(double smooth_iter, int max_i, double time);
+int		smooth_color_grayscale_animated(double smooth_iter, int max_i, double time);
 
 /* Input handling functions */
 void	handle_navigation_keys(t_fractol *fractol, keys_t key, double move_speed);

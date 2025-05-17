@@ -6,7 +6,7 @@
 /*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/17 23:01:24 by gasoline-ea      ###   ########.fr       */
+/*   Updated: 2025/05/17 23:32:08 by gasoline-ea      ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -79,11 +79,35 @@ int	color_psychedelic_animated(int i, int max_i, double time)
 
 int	color_grayscale(int i, int max_i)
 {
-	int	brightness;
+	double	t;
+	int		brightness;
 
 	if (i == max_i)
 		return (0x000000FF);
-	brightness = 255 - ((i * 255) / max_i);
+	t = (double)i / max_i;
+	brightness = (int)(255 * (0.5 + 0.5 * cos(t * 10.0)));
+	if (brightness < 0)
+		brightness = 0;
+	else if (brightness > 255)
+		brightness = 255;
+	return ((brightness << 24) | (brightness << 16) | (brightness << 8) | 0xFF);
+}
+
+int	color_grayscale_animated(int i, int max_i, double time)
+{
+	double	t;
+	double	time_phase;
+	int		brightness;
+
+	if (i == max_i)
+		return (0x000000FF);
+	t = (double)i / max_i;
+	time_phase = time * 0.3;
+	brightness = (int)(255 * (0.5 + 0.5 * cos(t * 10.0 + time_phase)));
+	if (brightness < 0)
+		brightness = 0;
+	else if (brightness > 255)
+		brightness = 255;
 	return ((brightness << 24) | (brightness << 16) | (brightness << 8) | 0xFF);
 }
 
@@ -103,8 +127,16 @@ int	colors(int i, int max_i, int color_scheme)
 
 int	colors_animated(int i, int max_i, int color_scheme, double time)
 {
-	if (color_scheme == COLOR_SCHEME_PSYCHEDELIC)
+	if (color_scheme == COLOR_SCHEME_CLASSIC)
+		return (color_classic_animated(i, max_i, time));
+	else if (color_scheme == COLOR_SCHEME_BLUE)
+		return (color_blue_animated(i, max_i, time));
+	else if (color_scheme == COLOR_SCHEME_FIRE)
+		return (color_fire_animated(i, max_i, time));
+	else if (color_scheme == COLOR_SCHEME_PSYCHEDELIC)
 		return (color_psychedelic_animated(i, max_i, time));
+	else if (color_scheme == COLOR_SCHEME_GRAYSCALE)
+		return (color_grayscale_animated(i, max_i, time));
 	else
 		return (colors(i, max_i, color_scheme));
 }
