@@ -76,74 +76,37 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 	t_fractol	*fractol;
 	double		move_speed;
 
+	if (keydata.action != MLX_PRESS)
+		return ;
 	fractol = param;
 	move_speed = 0.1 / fractol->zoom;
-
-	// Debug output for key presses
-	if (keydata.action == MLX_PRESS)
-		printf("Key pressed: %d\n", keydata.key);
-
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+	if (keydata.key == MLX_KEY_ESCAPE)
 		mlx_close_window(fractol->mlx);
-	else if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
+	else if (keydata.key == MLX_KEY_UP)
 		fractol->offset_y -= move_speed;
-	else if (keydata.key == MLX_KEY_DOWN && keydata.action == MLX_PRESS)
+	else if (keydata.key == MLX_KEY_DOWN)
 		fractol->offset_y += move_speed;
-	else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_PRESS)
+	else if (keydata.key == MLX_KEY_LEFT)
 		fractol->offset_x -= move_speed;
-	else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
+	else if (keydata.key == MLX_KEY_RIGHT)
 		fractol->offset_x += move_speed;
-	// Use page up/down for color cycling instead of +/-
-	else if (keydata.key == MLX_KEY_PAGE_UP && keydata.action == MLX_PRESS)
-	{
-		// Cycle to next color scheme
+	else if (keydata.key == MLX_KEY_C)
 		fractol->color_scheme = (fractol->color_scheme + 1) % NUM_COLOR_SCHEMES;
-		printf("Color scheme changed to: %d\n", fractol->color_scheme);
-	}
-	else if (keydata.key == MLX_KEY_PAGE_DOWN && keydata.action == MLX_PRESS)
+	else if (keydata.key == MLX_KEY_EQUAL)
+		fractol->zoom = (fractol->zoom < 1e10) ? fractol->zoom * 1.1 : fractol->zoom;
+	else if (keydata.key == MLX_KEY_MINUS)
+		fractol->zoom = (fractol->zoom > 0.1) ? fractol->zoom / 1.1 : fractol->zoom;
+	else if (keydata.key == MLX_KEY_R)
 	{
-		// Cycle to previous color scheme
-		fractol->color_scheme = (fractol->color_scheme + NUM_COLOR_SCHEMES - 1)
-			% NUM_COLOR_SCHEMES;
-		printf("Color scheme changed to: %d\n", fractol->color_scheme);
-	}
-	// Use +/- for zooming
-	else if (keydata.key == MLX_KEY_EQUAL && keydata.action == MLX_PRESS)
-	{
-		// Zoom in with + key
-		if (fractol->zoom < 1e10)
-			fractol->zoom *= 1.1;
-	}
-	else if (keydata.key == MLX_KEY_MINUS && keydata.action == MLX_PRESS)
-	{
-		// Zoom out with - key
-		if (fractol->zoom > 0.1)
-			fractol->zoom /= 1.1;
-	}
-	else if (keydata.key == MLX_KEY_R && keydata.action == MLX_PRESS)
-	{
-		// Reset view with R key
 		fractol->zoom = 1.0;
-		if (fractol->type == MANDELBROT)
-			fractol->offset_x = -0.5;
-		else
-			fractol->offset_x = 0.0;
+		fractol->offset_x = (fractol->type == MANDELBROT) ? -0.5 : 0.0;
 		fractol->offset_y = 0.0;
 	}
-	else if (keydata.key == MLX_KEY_I && keydata.action == MLX_PRESS)
-	{
-		// Increase max iterations with I key
+	else if (keydata.key == MLX_KEY_I)
 		fractol->max_iter += 50;
-	}
-	else if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
-	{
-		// Decrease max iterations with D key (minimum 50)
-		if (fractol->max_iter > 50)
-			fractol->max_iter -= 50;
-	}
-
-	if (keydata.action == MLX_PRESS)
-		fractal_render(fractol);
+	else if (keydata.key == MLX_KEY_D && fractol->max_iter > 50)
+		fractol->max_iter -= 50;
+	fractal_render(fractol);
 }
 
 void	handle_scroll(double xdelta, double ydelta, void *param)
