@@ -1,0 +1,65 @@
+# Fract'ol
+
+A fractal exploration program created as part of the 42 curriculum.
+
+## Description
+
+This program renders different types of fractals, allowing you to explore and interact with them.
+
+## Dependencies
+
+- [GLFW](https://www.glfw.org/)
+- CMake (for building MLX42)
+
+### Installing Dependencies
+
+#### On Linux (Debian/Ubuntu)
+```bash
+sudo apt update
+sudo apt install build-essential libx11-dev libglfw3-dev libglfw3 xorg-dev cmake
+```
+
+#### On macOS (using Homebrew)
+```bash
+brew install glfw cmake
+```
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/gasolineeater/fract_ol.git
+cd fract_ol
+```
+
+2. Compile the project:
+```bash
+make
+```
+
+This will:
+- Build the MLX42 library
+- Compile the libft library
+- Build the fractol executable
+
+## Usage
+
+Run the program with:
+```bash
+./fractol [fractal_type]
+```
+
+Where `fractal_type` is the type of fractal you want to display.
+
+## Controls
+
+- Mouse wheel: Zoom in/out
+- Arrow keys: Move around
+- ESC: Exit the program
+
+## Project Structure
+
+- `src/`: Source code files
+- `inc/`: Header files
+- `libft/`: Custom C library
+- `MLX42/`: Graphics library
