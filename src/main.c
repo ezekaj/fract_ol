@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/17 15:30:00 by ezekaj            #+#    #+#             */
+/*   Updated: 2025/05/17 15:35:30 by ezekaj           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/fractol.h"
 
 static void	print_usage(void)
@@ -23,12 +35,10 @@ static int	parse_args(int ac, char **av)
 {
 	if (ac < 2)
 		return (0);
-
 	if (strncmp(av[1], "mandelbrot", 10) == 0)
 		return (MANDELBROT);
 	else if (strncmp(av[1], "julia", 5) == 0)
 		return (JULIA);
-
 	return (0);
 }
 
@@ -42,7 +52,6 @@ int	main(int ac, char **av)
 	type = parse_args(ac, av);
 	if (!type)
 		print_usage();
-
 	mlx = mlx_init(WIDTH, HEIGHT, TITLE, 1);
 	if (!mlx)
 		return (1);
@@ -52,18 +61,14 @@ int	main(int ac, char **av)
 		mlx_terminate(mlx);
 		return (1);
 	}
-
 	fractol.mlx = mlx;
 	fractol.img = img;
 	init_fractol(&fractol, type, av);
-
 	mlx_image_to_window(mlx, img, 0, 0);
 	mlx_key_hook(mlx, &handle_keys, &fractol);
 	mlx_scroll_hook(mlx, &handle_scroll, &fractol);
-
 	fractal_render(&fractol);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
-
 	return (0);
 }

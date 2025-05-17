@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/17 15:30:12 by ezekaj            #+#    #+#             */
+/*   Updated: 2025/05/17 15:35:05 by ezekaj           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/fractol.h"
 
 void	map(int x, int y, double *real, double *imag, t_fractol *fractol)
@@ -43,4 +55,3 @@ void	fractal_render(t_fractol *fractol)
 		y++;
 	}
 }
-

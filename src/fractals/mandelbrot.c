@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mandelbrot.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
+/*   Updated: 2025/05/17 15:31:40 by ezekaj           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/fractol.h"
 
 int	mandelbrot(double real, double imag, int max_i)
@@ -10,10 +22,10 @@ int	mandelbrot(double real, double imag, int max_i)
 	z_imag = 0;
 	z_real = 0;
 	i = 0;
-	while (z_real*z_real + z_imag*z_imag < 4 && i < max_i)
+	while (z_real * z_real + z_imag * z_imag < 4 && i < max_i)
 	{
-		temp = z_real*z_real - z_imag*z_imag + real;
-		z_imag = 2*z_real*z_imag + imag;
+		temp = z_real * z_real - z_imag * z_imag + real;
+		z_imag = 2 * z_real * z_imag + imag;
 		z_real = temp;
 		i++;
 	}
