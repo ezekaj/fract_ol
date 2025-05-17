@@ -2,9 +2,8 @@
 
 void	map(int x, int y, double *real, double *imag, t_fractol *fractol)
 {
-	(void)fractol; // Suppress unused parameter warning
-	*real = (x - WIDTH / 2.0) * 3.0 / WIDTH - 0.5;
-	*imag = (y - HEIGHT / 2.0) * 3.0 / HEIGHT;
+	*real = (x - WIDTH / 2.0) * 4.0 / (WIDTH * fractol->zoom) + fractol->offset_x;
+	*imag = (y - HEIGHT / 2.0) * 4.0 / (HEIGHT * fractol->zoom) + fractol->offset_y;
 }
 
 int	colors(int i, int max_i)
@@ -23,6 +22,7 @@ void	fractal_render(t_fractol *fractol)
 	int		y;
 	double	real;
 	double	imag;
+	int		i;
 
 	y = 0;
 	while (y < HEIGHT)
@@ -31,7 +31,13 @@ void	fractal_render(t_fractol *fractol)
 		while (x < WIDTH)
 		{
 			map(x, y, &real, &imag, fractol);
-			mlx_put_pixel(fractol->img, x, y, colors(mandelbrot(real, imag, 100), 100));
+			if (fractol->type == MANDELBROT)
+				i = mandelbrot(real, imag, 100);
+			else if (fractol->type == JULIA)
+				i = julia(real, imag, fractol->c_real, fractol->c_imag, 100);
+			else
+				i = 0;
+			mlx_put_pixel(fractol->img, x, y, colors(i, 100));
 			x++;
 		}
 		y++;
