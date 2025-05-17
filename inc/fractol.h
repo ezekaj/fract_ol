@@ -19,7 +19,7 @@ typedef struct s_fractol
 }	t_fractol;
 
 void	map(int x, int y, double *real, double *imag, t_fractol *fractol);
-
+void	fractal_render(t_fractol *fractol);
 int	mandelbrot(double real, double imag, int max_i);
 int	colors(int i, int max_i);
 
