@@ -18,6 +18,8 @@ typedef struct s_fractol
     mlx_image_t *img;
 } t_fractol;
 
+void	map(int x, int y, double *real, double *imag, t_fractol *fractol)
+
 int	mandelbrot(double real, double imag, int max_i)
 
 # endif
