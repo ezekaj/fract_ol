@@ -61,6 +61,7 @@ Where `fractal_type` is the type of fractal you want to display:
 
 - `mandelbrot`: The Mandelbrot set
 - `julia [c_real] [c_imag]`: The Julia set with optional parameters (default: -0.7 0.27015)
+- `tricorn`: The Tricorn/Mandelbar fractal
 
 ## Controls
 
@@ -70,6 +71,13 @@ Where `fractal_type` is the type of fractal you want to display:
 - **C**: Cycle through color schemes
 - **I/D**: Increase/Decrease maximum iterations
 - **R**: Reset view (resets position, zoom, and iterations)
+- **S**: Toggle smooth coloring
+- **U**: Toggle UI display
+- **T**: Toggle multi-threaded rendering
+- **M**: Toggle color animation (for psychedelic color scheme)
+- **+/-**: Adjust animation speed when animation is enabled
+- **L**: Lock/unlock Julia set parameters (when in Julia mode)
+- **Left Mouse Button**: Lock current Julia parameters (when in Julia mode)
 - **ESC**: Exit the program
 
 ## Color Schemes
@@ -80,6 +88,16 @@ The program includes several color schemes that can be cycled through using the 
 - Fire: Red, orange, and yellow gradient resembling flames
 - Psychedelic: Rainbow cycling colors
 - Grayscale: Black and white gradient
+
+## Bonus Features
+
+- **Multiple Fractal Types**: Mandelbrot, Julia, and Tricorn
+- **Interactive Julia Set**: Move your mouse over the Julia set to change parameters in real-time
+- **Smooth Coloring**: Toggle with S key for more aesthetically pleasing renders
+- **Animated Colors**: Toggle with M key for dynamic, flowing color transitions in the psychedelic scheme
+- **On-screen Information**: Display coordinates, zoom level, and iteration count
+- **Multi-threading**: Toggle with T key for faster rendering on multi-core systems
+- **UI Controls**: Toggle the UI display with U key
 
 ## Project Structure
 

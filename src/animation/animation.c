@@ -6,7 +6,7 @@
 /*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/17 22:55:50 by gasoline-ea      ###   ########.fr       */
+/*   Updated: 2025/05/17 23:10:35 by gasoline-ea      ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -29,7 +29,7 @@ void	animation_loop(void *param)
 
 void	handle_animation_keys(t_fractol *fractol, keys_t key)
 {
-	if (key == MLX_KEY_A)
+	if (key == MLX_KEY_M)
 		fractol->animate_colors = !fractol->animate_colors;
 	else if (key == MLX_KEY_EQUAL || key == MLX_KEY_KP_ADD)
 	{
