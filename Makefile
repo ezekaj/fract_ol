@@ -43,7 +43,7 @@ $(NAME): $(OBJS)
 
 clean:
 	@echo "Cleaning object files..."
-	@rm -rf $(OBJS)
+	@rm -f $(OBJS)
 	@make -C $(LIBFT) clean
 	@make -C $(PRINTF) clean
 	@make -C $(GNL) clean
