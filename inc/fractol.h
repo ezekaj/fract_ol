@@ -18,6 +18,6 @@ typedef struct s_fractol
     mlx_image_t *img;
 } t_fractol;
 
-size_t	ft_strlen(char *s);
+int	mandelbrot(double real, double imag, int max_i)
 
 # endif
