@@ -15,3 +15,25 @@ int	colors(int i, int max_i)
 	brightness = (i * 255) / max_i;
 	return ((brightness << 24) | (brightness << 16) | (0xFF << 8) | 0xFF);
 }
+
+void	fractal_render(t_fractol *fractol)
+{
+	int		x;
+	int		y;
+	double	real;
+	double	imag;
+
+	y = 0;
+	while (y < HEIGHT)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
+			map(x, y, &real, &imag, fractol);
+			mlx_put_pixel(fractol->img, x, y, colors(mandelbrot(real, imag, 100), 100));
+			x++;
+		}
+		y++;
+	}
+}
+

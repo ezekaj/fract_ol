@@ -1,15 +1,18 @@
 #include "../inc/fractol.h"
 
-// #define WIDTH 800
-// #define HEIGHT 500
-
-int	main(void)
+int	main(int ac, char **av)
 {
 	mlx_t		*mlx;
 	mlx_image_t	*img;
+	t_fractol	fractol;
 
-	mlx = mlx_init(WIDTH, HEIGHT, "Fractol", 1);
-	img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	mlx_image_to_window(mlx, img, 0, 0);
-	mlx_loop(mlx);
+	if (ac >= 2)
+	{
+		mlx = mlx_init(WIDTH, HEIGHT, "Fractol", 1);
+		img = mlx_new_image(mlx, WIDTH, HEIGHT);
+		fractol.mlx = mlx;
+		fractol.img = img;
+		mlx_image_to_window(mlx, img, 0, 0);
+		mlx_loop(mlx);
+	}
 }
