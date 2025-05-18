@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/18 18:33:28 by ezekaj            #+#    #+#             */
+/*   Updated: 2025/05/18 19:17:28 by ezekaj           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
@@ -6,6 +18,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include <string.h>
+# include <pthread.h>
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../MLX42/include/MLX42/MLX42_Int.h"
 # include "../libft/libft.h"
@@ -13,6 +26,7 @@
 # define WIDTH 800
 # define HEIGHT 600
 # define TITLE "Fractol"
+# define NUM_THREADS 4
 
 # define MANDELBROT 1
 # define JULIA 2
@@ -26,6 +40,13 @@
 # define NUM_COLOR_SCHEMES 5
 
 # define DEFAULT_MAX_ITER 100
+
+typedef struct s_thread_data
+{
+	t_fractol	*fractol;
+	int			start_y;
+	int			end_y;
+}	t_thread_data;
 
 typedef struct s_fractol
 {
@@ -56,6 +77,18 @@ typedef struct s_coord
 	double	imag_after;
 	double	zoom_factor;
 }	t_coord;
+
+typedef struct s_color
+{
+	int		r;
+	int		g;
+	int		b;
+	int		brightness;
+	double	t;
+	double	phase;
+	double	time_phase;
+} t_color;
+
 
 /* Fractal calculation functions */
 int		mandelbrot(double real, double imag, int max_i);
@@ -89,7 +122,7 @@ int		colors(int i, int max_i, int color_scheme);
 int		colors_animated(int i, int max_i, int color_scheme, double time);
 
 /* Smooth coloring functions */
-double	calculate_smooth_value(double z_real, double z_imag, int iter, int max_i);
+double	calc_smooth_value(double z_real, double z_imag, int iter, int max_i);
 int		smooth_color_classic(double smooth_iter, int max_i);
 int		smooth_color_blue(double smooth_iter, int max_i);
 int		smooth_color_fire(double smooth_iter, int max_i);
@@ -98,11 +131,11 @@ int		smooth_color_grayscale(double smooth_iter, int max_i);
 int		smooth_color_classic_animated(double smooth_iter, int max_i, double time);
 int		smooth_color_blue_animated(double smooth_iter, int max_i, double time);
 int		smooth_color_fire_animated(double smooth_iter, int max_i, double time);
-int		smooth_color_psychedelic_animated(double smooth_iter, int max_i, double time);
+int		psychedelic_animated(double smooth_iter, int max_i, double time);
 int		smooth_color_grayscale_animated(double smooth_iter, int max_i, double time);
 
 /* Input handling functions */
-void	handle_navigation_keys(t_fractol *fractol, keys_t key, double move_speed);
+void	handle_nav_keys(t_fractol *fractol, keys_t key, double move_speed);
 void	handle_zoom_keys(t_fractol *fractol, keys_t key);
 void	handle_special_keys(t_fractol *fractol, keys_t key);
 void	handle_keys(mlx_key_data_t keydata, void *param);
