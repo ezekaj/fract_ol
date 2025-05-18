@@ -6,7 +6,7 @@
 /*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/18 21:50:15 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/05/18 22:45:19 by ezekaj           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,16 @@
 
 void	update_julia_params(t_fractol *fractol)
 {
-	int32_t	mouse_x;
-	int32_t	mouse_y;
-	double	real;
-	double	imag;
+	t_map_params	map_params;
+	int32_t			mouse_x;
+	int32_t			mouse_y;
+	double			real;
+	double			imag;
 
 	if (fractol->type != JULIA || fractol->julia_locked)
 		return ;
 	mlx_get_mouse_pos(fractol->mlx, &mouse_x, &mouse_y);
 	{
-		t_map_params map_params;
-
 		map_params.x = mouse_x;
 		map_params.y = mouse_y;
 		map_params.real = &real;

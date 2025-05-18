@@ -6,7 +6,7 @@
 /*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/18 21:50:08 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/05/18 22:46:15 by ezekaj           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ double	calculate_zoom_factor(t_fractol *fractol, double ydelta)
 void	get_coordinates(t_fractol *fractol, int32_t mouse_x, int32_t mouse_y,
 		t_coord *coord)
 {
-	{
-		t_map_params map_params;
+	t_map_params	map_params;
 
+	{
 		map_params.x = mouse_x;
 		map_params.y = mouse_y;
 		map_params.real = &coord->real_before;
@@ -44,8 +44,6 @@ void	get_coordinates(t_fractol *fractol, int32_t mouse_x, int32_t mouse_y,
 	}
 	fractol->zoom *= coord->zoom_factor;
 	{
-		t_map_params map_params;
-
 		map_params.x = mouse_x;
 		map_params.y = mouse_y;
 		map_params.real = &coord->real_after;

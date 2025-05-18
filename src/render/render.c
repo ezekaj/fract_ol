@@ -6,7 +6,7 @@
 /*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/18 21:50:01 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/05/18 23:41:12 by ezekaj           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,14 @@
 
 int	calculate_pixel(double real, double imag, t_fractol *fractol)
 {
-	int	i;
+	int				i;
+	t_julia_params	params;
 
 	i = 0;
 	if (fractol->type == MANDELBROT)
 		i = mandelbrot(real, imag, fractol->max_iter);
 	else if (fractol->type == JULIA)
 	{
-		t_julia_params params;
-
 		params.real = real;
 		params.imag = imag;
 		params.c_real = fractol->c_real;
@@ -37,18 +36,23 @@ int	calculate_pixel(double real, double imag, t_fractol *fractol)
 
 void	render_row(int y, t_fractol *fractol)
 {
-	int		x;
-	double	real;
-	double	imag;
-	int		i;
-	int		color;
+	double			real;
+	double			imag;
+	double			z_real;
+	double			z_imag;
+	double			temp;
+	double			smooth_i;
+	int				x;
+	int				i;
+	int				color;
+	t_map_params	map_params;
 
 	x = 0;
+	z_real = 0;
+	z_imag = 0;
 	while (x < WIDTH)
 	{
 		{
-			t_map_params map_params;
-
 			map_params.x = x;
 			map_params.y = y;
 			map_params.real = &real;
@@ -58,42 +62,34 @@ void	render_row(int y, t_fractol *fractol)
 		i = calculate_pixel(real, imag, fractol);
 		if (fractol->smooth_color && i < fractol->max_iter)
 		{
-			double z_real = 0;
-			double z_imag = 0;
 			if (fractol->type == MANDELBROT)
 			{
-				z_real = real;
-				z_imag = imag;
 				for (int j = 0; j < i; j++)
 				{
-					double temp = z_real * z_real - z_imag * z_imag + real;
+					temp = z_real * z_real - z_imag * z_imag + real;
 					z_imag = 2 * z_real * z_imag + imag;
 					z_real = temp;
 				}
 			}
 			else if (fractol->type == JULIA)
 			{
-				z_real = real;
-				z_imag = imag;
 				for (int j = 0; j < i; j++)
 				{
-					double temp = z_real * z_real - z_imag * z_imag + fractol->c_real;
+					temp = z_real * z_real - z_imag * z_imag + fractol->c_real;
 					z_imag = 2 * z_real * z_imag + fractol->c_imag;
 					z_real = temp;
 				}
 			}
 			else if (fractol->type == TRICORN)
 			{
-				z_real = real;
-				z_imag = imag;
 				for (int j = 0; j < i; j++)
 				{
-					double temp = z_real * z_real - z_imag * z_imag + real;
+					temp = z_real * z_real - z_imag * z_imag + real;
 					z_imag = -2 * z_real * z_imag + imag;
 					z_real = temp;
 				}
 			}
-			double smooth_i = calc_smooth_value(z_real, z_imag, i, fractol->max_iter);
+			smooth_i = calc_smooth_value(z_real, z_imag, i, fractol->max_iter);
 			if (fractol->animate_colors)
 			{
 				if (fractol->color_scheme == COLOR_SCHEME_CLASSIC)

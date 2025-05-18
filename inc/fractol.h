@@ -6,7 +6,7 @@
 /*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:33:28 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/18 21:50:54 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/05/18 23:32:08 by ezekaj           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,11 +144,13 @@ int		smooth_color_blue(double smooth_iter, int max_i);
 int		smooth_color_fire(double smooth_iter, int max_i);
 int		smooth_color_psychedelic(double smooth_iter, int max_i);
 int		smooth_color_grayscale(double smooth_iter, int max_i);
-int		smooth_color_classic_animated(double smooth_iter, int max_i, double time);
+int		smooth_color_classic_animated(double smooth_iter,
+			int max_i, double time);
 int		smooth_color_blue_animated(double smooth_iter, int max_i, double time);
 int		smooth_color_fire_animated(double smooth_iter, int max_i, double time);
 int		psychedelic_animated(double smooth_iter, int max_i, double time);
-int		smooth_color_grayscale_animated(double smooth_iter, int max_i, double time);
+int		smooth_color_grayscale_animated(double smooth_iter,
+			int max_i, double time);
 
 /* Input handling functions */
 void	handle_nav_keys(t_fractol *fractol, keys_t key, double move_speed);
