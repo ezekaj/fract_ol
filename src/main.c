@@ -6,7 +6,7 @@
 /*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:00 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/17 23:05:20 by gasoline-ea      ###   ########.fr       */
+/*   Updated: 2025/05/18 00:21:11 by gasoline-ea      ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -39,48 +39,40 @@ static int	parse_args(int ac, char **av)
 {
 	if (ac < 2)
 		return (0);
-	if (strncmp(av[1], "mandelbrot", 10) == 0)
+	if (ft_strncmp(av[1], "mandelbrot", 10) == 0)
 		return (MANDELBROT);
-	else if (strncmp(av[1], "julia", 5) == 0)
+	else if (ft_strncmp(av[1], "julia", 5) == 0)
 		return (JULIA);
-	else if (strncmp(av[1], "tricorn", 7) == 0)
+	else if (ft_strncmp(av[1], "tricorn", 7) == 0)
 		return (TRICORN);
 	return (0);
 }
 
 int	main(int ac, char **av)
 {
-	mlx_t		*mlx;
-	mlx_image_t	*img;
 	t_fractol	fractol;
-	int			type;
 
-	type = parse_args(ac, av);
-	if (!type)
+	fractol.type = parse_args(ac, av);
+	if (!fractol.type)
 		print_usage();
-	mlx = mlx_init(WIDTH, HEIGHT, TITLE, 1);
-	if (!mlx)
+	fractol.mlx = mlx_init(WIDTH, HEIGHT, TITLE, 1);
+	if (!fractol.mlx)
 		return (1);
-	img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	if (!img)
-	{
-		mlx_terminate(mlx);
-		return (1);
-	}
-	fractol.mlx = mlx;
-	fractol.img = img;
-	init_fractol(&fractol, type, av);
-	mlx_image_to_window(mlx, img, 0, 0);
-	mlx_key_hook(mlx, &handle_keys, &fractol);
-	mlx_scroll_hook(mlx, &handle_scroll, &fractol);
-	mlx_mouse_hook(mlx, &handle_mouse_click, &fractol);
-
+	fractol.img = mlx_new_image(fractol.mlx, WIDTH, HEIGHT);
+	if (!fractol.img)
+		return (mlx_terminate(fractol.mlx), 1);
+	mlx_set_setting(MLX_STRETCH_IMAGE, true);
+	init_fractol(&fractol, fractol.type, av);
+	mlx_image_to_window(fractol.mlx, fractol.img, 0, 0);
+	mlx_key_hook(fractol.mlx, &handle_keys, &fractol);
+	mlx_scroll_hook(fractol.mlx, &handle_scroll, &fractol);
+	mlx_mouse_hook(fractol.mlx, &handle_mouse_click, &fractol);
 	if (fractol.use_threads)
 		threaded_fractal_render(&fractol);
 	else
 		fractal_render(&fractol);
-	mlx_loop_hook(mlx, &animation_loop, &fractol);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
+	mlx_loop_hook(fractol.mlx, &animation_loop, &fractol);
+	mlx_loop(fractol.mlx);
+	mlx_terminate(fractol.mlx);
 	return (0);
 }
