@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:33:28 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/18 21:22:54 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/05/18 21:41:28 by gasoline-ea      ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
@@ -87,16 +87,32 @@ typedef struct s_color
 	double	t;
 	double	phase;
 	double	time_phase;
-} t_color;
+}	t_color;
 
+typedef struct s_julia_params
+{
+	double	real;
+	double	imag;
+	double	c_real;
+	double	c_imag;
+	int		max_i;
+}	t_julia_params;
+
+typedef struct s_map_params
+{
+	int			x;
+	int			y;
+	double		*real;
+	double		*imag;
+}	t_map_params;
 
 /* Fractal calculation functions */
 int		mandelbrot(double real, double imag, int max_i);
-int		julia(double real, double imag, double c_real, double c_imag, int max_i);
+int		julia(t_julia_params *params);
 int		tricorn(double real, double imag, int max_i);
 
 /* Rendering functions */
-void	map(int x, int y, double *real, double *imag, t_fractol *fractol);
+void	map(t_map_params *params, t_fractol *fractol);
 int		calculate_pixel(double real, double imag, t_fractol *fractol);
 void	render_row(int y, t_fractol *fractol);
 void	fractal_render(t_fractol *fractol);
@@ -142,8 +158,7 @@ void	handle_keys(mlx_key_data_t keydata, void *param);
 
 /* Mouse handling functions */
 void	update_julia_params(t_fractol *fractol);
-void	handle_mouse_click(mouse_key_t button, action_t action,
-		modifier_key_t mods, void *param);
+void	handle_mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void *param);
 
 /* Scroll handling functions */
 double	calculate_zoom_factor(t_fractol *fractol, double ydelta);
@@ -167,4 +182,4 @@ void	set_offsets(t_fractol *fractol, int type);
 void	set_julia_params(t_fractol *fractol, char **av);
 void	init_fractol(t_fractol *fractol, int type, char **av);
 
-# endif
+#endif

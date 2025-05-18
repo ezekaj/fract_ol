@@ -6,7 +6,7 @@
 /*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/17 22:10:19 by gasoline-ea      ###   ########.fr       */
+/*   Updated: 2025/05/18 21:43:38 by gasoline-ea      ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -22,10 +22,17 @@ void	update_julia_params(t_fractol *fractol)
 	if (fractol->type != JULIA || fractol->julia_locked)
 		return ;
 	mlx_get_mouse_pos(fractol->mlx, &mouse_x, &mouse_y);
-	map(mouse_x, mouse_y, &real, &imag, fractol);
+	{
+		t_map_params map_params;
+
+		map_params.x = mouse_x;
+		map_params.y = mouse_y;
+		map_params.real = &real;
+		map_params.imag = &imag;
+		map(&map_params, fractol);
+	}
 	fractol->c_real = real;
 	fractol->c_imag = imag;
-
 	if (fractol->use_threads)
 		threaded_fractal_render(fractol);
 	else

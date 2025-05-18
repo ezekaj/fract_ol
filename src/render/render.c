@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/18 21:23:03 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/05/18 21:42:55 by gasoline-ea      ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../inc/fractol.h"
 
@@ -20,8 +20,16 @@ int	calculate_pixel(double real, double imag, t_fractol *fractol)
 	if (fractol->type == MANDELBROT)
 		i = mandelbrot(real, imag, fractol->max_iter);
 	else if (fractol->type == JULIA)
-		i = julia(real, imag, fractol->c_real, fractol->c_imag,
-				fractol->max_iter);
+	{
+		t_julia_params params;
+
+		params.real = real;
+		params.imag = imag;
+		params.c_real = fractol->c_real;
+		params.c_imag = fractol->c_imag;
+		params.max_i = fractol->max_iter;
+		i = julia(&params);
+	}
 	else if (fractol->type == TRICORN)
 		i = tricorn(real, imag, fractol->max_iter);
 	return (i);
@@ -38,7 +46,15 @@ void	render_row(int y, t_fractol *fractol)
 	x = 0;
 	while (x < WIDTH)
 	{
-		map(x, y, &real, &imag, fractol);
+		{
+			t_map_params map_params;
+
+			map_params.x = x;
+			map_params.y = y;
+			map_params.real = &real;
+			map_params.imag = &imag;
+			map(&map_params, fractol);
+		}
 		i = calculate_pixel(real, imag, fractol);
 		if (fractol->smooth_color && i < fractol->max_iter)
 		{

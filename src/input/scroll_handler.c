@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   scroll_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/17 15:31:40 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/05/18 21:43:17 by gasoline-ea      ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../inc/fractol.h"
 
@@ -33,9 +33,25 @@ double	calculate_zoom_factor(t_fractol *fractol, double ydelta)
 void	get_coordinates(t_fractol *fractol, int32_t mouse_x, int32_t mouse_y,
 		t_coord *coord)
 {
-	map(mouse_x, mouse_y, &coord->real_before, &coord->imag_before, fractol);
+	{
+		t_map_params map_params;
+
+		map_params.x = mouse_x;
+		map_params.y = mouse_y;
+		map_params.real = &coord->real_before;
+		map_params.imag = &coord->imag_before;
+		map(&map_params, fractol);
+	}
 	fractol->zoom *= coord->zoom_factor;
-	map(mouse_x, mouse_y, &coord->real_after, &coord->imag_after, fractol);
+	{
+		t_map_params map_params;
+
+		map_params.x = mouse_x;
+		map_params.y = mouse_y;
+		map_params.real = &coord->real_after;
+		map_params.imag = &coord->imag_after;
+		map(&map_params, fractol);
+	}
 }
 
 void	adjust_view(t_fractol *fractol, t_coord *coord, double ydelta)

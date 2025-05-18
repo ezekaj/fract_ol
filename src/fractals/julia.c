@@ -1,31 +1,31 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   julia.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:29 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/18 21:22:48 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/05/18 21:41:45 by gasoline-ea      ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../../inc/fractol.h"
 
-int	julia(double real, double imag, double c_real, double c_imag, int max_i)
+int	julia(t_julia_params *params)
 {
 	double	z_real;
 	double	z_imag;
 	double	temp;
 	int		i;
 
-	z_real = real;
-	z_imag = imag;
+	z_real = params->real;
+	z_imag = params->imag;
 	i = 0;
-	while (z_real * z_real + z_imag * z_imag < 4 && i < max_i)
+	while (z_real * z_real + z_imag * z_imag < 4 && i < params->max_i)
 	{
-		temp = z_real * z_real - z_imag * z_imag + c_real;
-		z_imag = 2 * z_real * z_imag + c_imag;
+		temp = z_real * z_real - z_imag * z_imag + params->c_real;
+		z_imag = 2 * z_real * z_imag + params->c_imag;
 		z_real = temp;
 		i++;
 	}
