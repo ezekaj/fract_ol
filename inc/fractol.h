@@ -6,7 +6,7 @@
 /*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:33:28 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/18 19:23:28 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/05/18 21:22:54 by ezekaj           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@
 # define NUM_COLOR_SCHEMES 5
 
 # define DEFAULT_MAX_ITER 100
-
 
 typedef struct s_fractol
 {
