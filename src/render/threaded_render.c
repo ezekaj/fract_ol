@@ -1,26 +1,16 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   threaded_render.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
+/*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/17 22:35:09 by gasoline-ea      ###   ########.fr       */
+/*   Updated: 2025/05/18 18:37:47 by ezekaj           ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../inc/fractol.h"
-#include <pthread.h>
-
-#define NUM_THREADS 4
-
-typedef struct s_thread_data
-{
-	t_fractol	*fractol;
-	int			start_y;
-	int			end_y;
-}	t_thread_data;
 
 void	*render_thread(void *arg)
 {
@@ -50,8 +40,7 @@ void	threaded_fractal_render(t_fractol *fractol)
 	{
 		thread_data[i].fractol = fractol;
 		thread_data[i].start_y = i * rows_per_thread;
-		thread_data[i].end_y = (i == NUM_THREADS - 1) ?
-			HEIGHT : (i + 1) * rows_per_thread;
+		thread_data[i].end_y = (i == NUM_THREADS - 1) ?	HEIGHT : (i + 1) * rows_per_thread;
 		pthread_create(&threads[i], NULL, render_thread, &thread_data[i]);
 		i++;
 	}

@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
+/*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/17 23:33:39 by gasoline-ea      ###   ########.fr       */
+/*   Updated: 2025/05/18 18:44:19 by ezekaj           ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../inc/fractol.h"
 
@@ -40,7 +40,6 @@ void	render_row(int y, t_fractol *fractol)
 	{
 		map(x, y, &real, &imag, fractol);
 		i = calculate_pixel(real, imag, fractol);
-
 		if (fractol->smooth_color && i < fractol->max_iter)
 		{
 			double z_real = 0;
@@ -78,7 +77,7 @@ void	render_row(int y, t_fractol *fractol)
 					z_real = temp;
 				}
 			}
-			double smooth_i = calculate_smooth_value(z_real, z_imag, i, fractol->max_iter);
+			double smooth_i = calc_smooth_value(z_real, z_imag, i, fractol->max_iter);
 			if (fractol->animate_colors)
 			{
 				if (fractol->color_scheme == COLOR_SCHEME_CLASSIC)
@@ -88,7 +87,7 @@ void	render_row(int y, t_fractol *fractol)
 				else if (fractol->color_scheme == COLOR_SCHEME_FIRE)
 					color = smooth_color_fire_animated(smooth_i, fractol->max_iter, fractol->animation_time);
 				else if (fractol->color_scheme == COLOR_SCHEME_PSYCHEDELIC)
-					color = smooth_color_psychedelic_animated(smooth_i, fractol->max_iter, fractol->animation_time);
+					color = psychedelic_animated(smooth_i, fractol->max_iter, fractol->animation_time);
 				else if (fractol->color_scheme == COLOR_SCHEME_GRAYSCALE)
 					color = smooth_color_grayscale_animated(smooth_i, fractol->max_iter, fractol->animation_time);
 				else
