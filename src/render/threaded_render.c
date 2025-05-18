@@ -27,12 +27,11 @@ void	*render_thread(void *arg)
 	return (NULL);
 }
 
-void	threaded_fractal_render(t_fractol *fractol)
+void	create_render_threads(pthread_t *threads, t_thread_data *thread_data,
+		t_fractol *fractol)
 {
-	pthread_t		threads[NUM_THREADS];
-	t_thread_data	thread_data[NUM_THREADS];
-	int				i;
-	int				rows_per_thread;
+	int	i;
+	int	rows_per_thread;
 
 	rows_per_thread = HEIGHT / NUM_THREADS;
 	i = 0;
@@ -40,10 +39,22 @@ void	threaded_fractal_render(t_fractol *fractol)
 	{
 		thread_data[i].fractol = fractol;
 		thread_data[i].start_y = i * rows_per_thread;
-		thread_data[i].end_y = (i == NUM_THREADS - 1) ?	HEIGHT : (i + 1) * rows_per_thread;
+		if (i == NUM_THREADS - 1)
+			thread_data[i].end_y = HEIGHT;
+		else
+			thread_data[i].end_y = (i + 1) * rows_per_thread;
 		pthread_create(&threads[i], NULL, render_thread, &thread_data[i]);
 		i++;
 	}
+}
+
+void	threaded_fractal_render(t_fractol *fractol)
+{
+	pthread_t		threads[NUM_THREADS];
+	t_thread_data	thread_data[NUM_THREADS];
+	int				i;
+
+	create_render_threads(threads, thread_data, fractol);
 	i = 0;
 	while (i < NUM_THREADS)
 	{

@@ -40,22 +40,9 @@ void	handle_zoom_keys(t_fractol *fractol, keys_t key)
 	}
 }
 
-void	handle_special_keys(t_fractol *fractol, keys_t key)
+void	handle_display_keys(t_fractol *fractol, keys_t key)
 {
-	if (key == MLX_KEY_C)
-		fractol->color_scheme = (fractol->color_scheme + 1) % NUM_COLOR_SCHEMES;
-	else if (key == MLX_KEY_R)
-	{
-		fractol->zoom = 1.0;
-		fractol->offset_x = (fractol->type == MANDELBROT) ? -0.5 : 0.0;
-		fractol->offset_y = 0.0;
-		fractol->max_iter = DEFAULT_MAX_ITER;
-	}
-	else if (key == MLX_KEY_I)
-		fractol->max_iter += 50;
-	else if (key == MLX_KEY_D && fractol->max_iter > 50)
-		fractol->max_iter -= 50;
-	else if (key == MLX_KEY_S)
+	if (key == MLX_KEY_S)
 		fractol->smooth_color = !fractol->smooth_color;
 	else if (key == MLX_KEY_U)
 		fractol->show_ui = !fractol->show_ui;
@@ -65,6 +52,28 @@ void	handle_special_keys(t_fractol *fractol, keys_t key)
 		fractol->julia_locked = !fractol->julia_locked;
 	else
 		handle_animation_keys(fractol, key);
+}
+
+void	handle_special_keys(t_fractol *fractol, keys_t key)
+{
+	if (key == MLX_KEY_C)
+		fractol->color_scheme = (fractol->color_scheme + 1) % NUM_COLOR_SCHEMES;
+	else if (key == MLX_KEY_R)
+	{
+		fractol->zoom = 1.0;
+		if (fractol->type == MANDELBROT)
+			fractol->offset_x = -0.5;
+		else
+			fractol->offset_x = 0.0;
+		fractol->offset_y = 0.0;
+		fractol->max_iter = DEFAULT_MAX_ITER;
+	}
+	else if (key == MLX_KEY_I)
+		fractol->max_iter += 50;
+	else if (key == MLX_KEY_D && fractol->max_iter > 50)
+		fractol->max_iter -= 50;
+	else
+		handle_display_keys(fractol, key);
 }
 
 void	handle_keys(mlx_key_data_t keydata, void *param)
