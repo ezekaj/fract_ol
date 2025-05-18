@@ -1,18 +1,18 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   key_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gasoline-eater <gasoline-eater@student.    +#+  +:+       +#+        */
+/*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/17 23:04:32 by gasoline-ea      ###   ########.fr       */
+/*   Updated: 2025/05/18 18:41:57 by ezekaj           ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../../inc/fractol.h"
 
-void	handle_navigation_keys(t_fractol *fractol, keys_t key, double move_speed)
+void	handle_nav_keys(t_fractol *fractol, keys_t key, double move_speed)
 {
 	if (key == MLX_KEY_ESCAPE)
 		mlx_close_window(fractol->mlx);
@@ -76,10 +76,9 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 		return ;
 	fractol = param;
 	move_speed = 0.1 / fractol->zoom;
-	handle_navigation_keys(fractol, keydata.key, move_speed);
+	handle_nav_keys(fractol, keydata.key, move_speed);
 	handle_zoom_keys(fractol, keydata.key);
 	handle_special_keys(fractol, keydata.key);
-
 	if (fractol->use_threads)
 		threaded_fractal_render(fractol);
 	else
