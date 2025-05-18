@@ -6,7 +6,7 @@
 /*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:33:28 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/18 19:17:28 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/05/18 19:23:28 by ezekaj           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,6 @@
 
 # define DEFAULT_MAX_ITER 100
 
-typedef struct s_thread_data
-{
-	t_fractol	*fractol;
-	int			start_y;
-	int			end_y;
-}	t_thread_data;
 
 typedef struct s_fractol
 {
@@ -68,6 +62,13 @@ typedef struct s_fractol
 	double		animation_time;
 	double		animation_speed;
 }	t_fractol;
+
+typedef struct s_thread_data
+{
+	t_fractol	*fractol;
+	int			start_y;
+	int			end_y;
+}	t_thread_data;
 
 typedef struct s_coord
 {
