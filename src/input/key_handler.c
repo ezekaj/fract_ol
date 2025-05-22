@@ -6,7 +6,7 @@
 /*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/18 21:50:21 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/05/22 18:08:11 by ezekaj           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	handle_nav_keys(t_fractol *fractol, keys_t key, double move_speed)
 {
 	if (key == MLX_KEY_ESCAPE)
 		mlx_close_window(fractol->mlx);
-	else if (key == MLX_KEY_UP || key == MLX_KEY_W)
+	else if (key == MLX_KEY_UP)
 		fractol->offset_y -= move_speed;
-	else if (key == MLX_KEY_DOWN || key == MLX_KEY_S)
+	else if (key == MLX_KEY_DOWN)
 		fractol->offset_y += move_speed;
-	else if (key == MLX_KEY_LEFT || key == MLX_KEY_A)
+	else if (key == MLX_KEY_LEFT)
 		fractol->offset_x -= move_speed;
-	else if (key == MLX_KEY_RIGHT || key == MLX_KEY_D)
+	else if (key == MLX_KEY_RIGHT)
 		fractol->offset_x += move_speed;
 }
 
