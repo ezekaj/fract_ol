@@ -6,7 +6,7 @@
 /*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/22 18:08:11 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/05/22 18:17:40 by ezekaj           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,6 @@ void	handle_special_keys(t_fractol *fractol, keys_t key)
 		fractol->offset_y = 0.0;
 		fractol->max_iter = DEFAULT_MAX_ITER;
 	}
-	else if (key == MLX_KEY_I)
-		fractol->max_iter += 50;
-	else if (key == MLX_KEY_D && fractol->max_iter > 50)
-		fractol->max_iter -= 50;
 	else
 		handle_display_keys(fractol, key);
 }
