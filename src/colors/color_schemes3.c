@@ -6,37 +6,12 @@
 /*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/19 01:30:00 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/06/03 22:31:14 by ezekaj           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/fractol.h"
 
-int	color_classic_animated(int i, int max_i, double time)
-{
-	double	t;
-	double	time_phase;
-	int		r;
-	int		g;
-	int		b;
-
-	if (i == max_i)
-		return (0x000000FF);
-	t = (double)i / max_i;
-	time_phase = time * 0.3;
-	r = (int)(200 + 55 * sin(t * 5.0 + time_phase));
-	g = (int)(200 + 55 * sin(t * 5.0 + time_phase));
-	b = (int)(255);
-	if (r < 0)
-		r = 0;
-	else if (r > 255)
-		r = 255;
-	if (g < 0)
-		g = 0;
-	else if (g > 255)
-		g = 255;
-	return ((r << 24) | (g << 16) | (b << 8) | 0xFF);
-}
 
 int	color_fire_animated(int i, int max_i, double time)
 {
