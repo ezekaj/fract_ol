@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   smooth_coloring5.c                                 :+:      :+:    :+:   */
+/*   smooth_coloring_basic2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/19 01:30:00 by ezekaj           ###   ########.fr       */
+/*   Created: 2025/06/18 00:00:00 by ezekaj            #+#    #+#             */
+/*   Updated: 2025/06/18 00:00:00 by ezekaj           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/fractol.h"
+
+
 
 void	init_psychedelic_color(t_color *color, double smooth_iter, int max_i)
 {
@@ -30,22 +32,6 @@ void	apply_psychedelic_effects(t_color *color)
 	color->b = (int)(color->b * (0.8 + 0.2 * sin(color->t * 11.0)));
 }
 
-void	clamp_color_values(t_color *color)
-{
-	if (color->r < 0)
-		color->r = 0;
-	else if (color->r > 255)
-		color->r = 255;
-	if (color->g < 0)
-		color->g = 0;
-	else if (color->g > 255)
-		color->g = 255;
-	if (color->b < 0)
-		color->b = 0;
-	else if (color->b > 255)
-		color->b = 255;
-}
-
 int	smooth_color_psychedelic(double smooth_iter, int max_i)
 {
 	t_color	color;
@@ -56,4 +42,20 @@ int	smooth_color_psychedelic(double smooth_iter, int max_i)
 	apply_psychedelic_effects(&color);
 	clamp_color_values(&color);
 	return ((color.r << 24) | (color.g << 16) | (color.b << 8) | 0xFF);
+}
+
+int	smooth_color_grayscale(double smooth_iter, int max_i)
+{
+	double	t;
+	int		brightness;
+
+	if (smooth_iter >= max_i)
+		return (0x000000FF);
+	t = smooth_iter / max_i;
+	brightness = (int)(255 * (0.5 + 0.5 * cos(t * 10.0)));
+	if (brightness < 0)
+		brightness = 0;
+	else if (brightness > 255)
+		brightness = 255;
+	return ((brightness << 24) | (brightness << 16) | (brightness << 8) | 0xFF);
 }

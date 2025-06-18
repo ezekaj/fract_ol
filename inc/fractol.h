@@ -173,10 +173,6 @@ void	apply_psychedelic_animated_effects(t_color *color);
 int		color_psychedelic_animated(int i, int max_i, double time);
 int		color_grayscale_animated(int i, int max_i, double time);
 int		colors(int i, int max_i, int color_scheme);
-int		colors_animated_classic_blue(int i, int max_i, int color_scheme,
-			double time);
-int		colors_animated_fire_psychedelic(int i, int max_i,
-			int color_scheme, double time);
 int		colors_animated(int i, int max_i, int color_scheme, double time);
 
 /* Smooth coloring functions */
@@ -189,16 +185,18 @@ void	apply_psychedelic_effects(t_color *color);
 void	clamp_color_values(t_color *color);
 int		smooth_color_psychedelic(double smooth_iter, int max_i);
 int		smooth_color_grayscale(double smooth_iter, int max_i);
-int		smooth_color_classic_animated(double smooth_iter,
-			int max_i, double time);
-int		smooth_color_blue_animated(double smooth_iter, int max_i, double time);
-int		smooth_color_fire_animated(double smooth_iter, int max_i, double time);
+int		smooth_color_classic_animated(double smooth_iter, int max_i,
+			double time);
+int		smooth_color_blue_animated(double smooth_iter, int max_i,
+			double time);
+int		smooth_color_fire_animated(double smooth_iter, int max_i,
+			double time);
 void	init_psychedelic_animated(t_color *color, double smooth_iter,
 			int max_i, double time);
 void	apply_animated_effects(t_color *color);
 int		psychedelic_animated(double smooth_iter, int max_i, double time);
-int		smooth_color_grayscale_animated(double smooth_iter,
-			int max_i, double time);
+int		smooth_color_grayscale_animated(double smooth_iter, int max_i,
+			double time);
 
 /* Input handling functions */
 void	handle_nav_keys(t_fractol *fractol, keys_t key, double move_speed);
@@ -214,8 +212,8 @@ void	handle_mouse_click(mouse_key_t button, action_t action,
 
 /* Scroll handling functions */
 double	calculate_zoom_factor(t_fractol *fractol, double ydelta);
-void	get_coordinates(t_fractol *fractol, int32_t mouse_x, int32_t mouse_y,
-			t_coord *coord);
+void	get_coordinates(t_fractol *fractol, int32_t mouse_x,
+			int32_t mouse_y, t_coord *coord);
 void	adjust_view(t_fractol *fractol, t_coord *coord, double ydelta);
 void	handle_scroll(double xdelta, double ydelta, void *param);
 
@@ -233,5 +231,11 @@ void	set_default_values(t_fractol *fractol, int type);
 void	set_offsets(t_fractol *fractol, int type);
 void	set_julia_params(t_fractol *fractol, char **av);
 void	init_fractol(t_fractol *fractol, int type, char **av);
+
+/* Main utility functions */
+void	print_usage_header(void);
+void	print_usage_examples(void);
+void	print_usage(void);
+int		parse_args(int ac, char **av);
 
 #endif

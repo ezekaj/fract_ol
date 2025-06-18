@@ -1,50 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   smooth_coloring3.c                                 :+:      :+:    :+:   */
+/*   smooth_coloring_animated2.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/19 01:30:00 by ezekaj           ###   ########.fr       */
+/*   Created: 2025/06/18 00:00:00 by ezekaj            #+#    #+#             */
+/*   Updated: 2025/06/18 00:00:00 by ezekaj           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/fractol.h"
-
-int	smooth_color_grayscale(double smooth_iter, int max_i)
-{
-	double	t;
-	int		brightness;
-
-	if (smooth_iter >= max_i)
-		return (0x000000FF);
-	t = smooth_iter / max_i;
-	brightness = (int)(255 * (0.5 + 0.5 * cos(t * 10.0)));
-	if (brightness < 0)
-		brightness = 0;
-	else if (brightness > 255)
-		brightness = 255;
-	return ((brightness << 24) | (brightness << 16) | (brightness << 8) | 0xFF);
-}
-
-int	smooth_color_grayscale_animated(double smooth_iter, int max_i, double time)
-{
-	double	t;
-	double	time_phase;
-	int		brightness;
-
-	if (smooth_iter >= max_i)
-		return (0x000000FF);
-	t = smooth_iter / max_i;
-	time_phase = time * 0.3;
-	brightness = (int)(255 * (0.5 + 0.5 * cos(t * 10.0 + time_phase)));
-	if (brightness < 0)
-		brightness = 0;
-	else if (brightness > 255)
-		brightness = 255;
-	return ((brightness << 24) | (brightness << 16) | (brightness << 8) | 0xFF);
-}
 
 void	init_psychedelic_animated(t_color *color, double smooth_iter,
 		int max_i, double time)
@@ -81,4 +47,22 @@ int	psychedelic_animated(double smooth_iter, int max_i, double time)
 	apply_animated_effects(&color);
 	clamp_color_values(&color);
 	return ((color.r << 24) | (color.g << 16) | (color.b << 8) | 0xFF);
+}
+
+int	smooth_color_grayscale_animated(double smooth_iter, int max_i, double time)
+{
+	double	t;
+	double	time_phase;
+	int		brightness;
+
+	if (smooth_iter >= max_i)
+		return (0x000000FF);
+	t = smooth_iter / max_i;
+	time_phase = time * 0.3;
+	brightness = (int)(255 * (0.5 + 0.5 * cos(t * 10.0 + time_phase)));
+	if (brightness < 0)
+		brightness = 0;
+	else if (brightness > 255)
+		brightness = 255;
+	return ((brightness << 24) | (brightness << 16) | (brightness << 8) | 0xFF);
 }

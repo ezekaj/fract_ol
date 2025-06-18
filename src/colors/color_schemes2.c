@@ -5,12 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/17 15:30:38 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/18 23:37:18 by ezekaj           ###   ########.fr       */
+/*   Created: 2025/06/18 00:00:00 by ezekaj            #+#    #+#             */
+/*   Updated: 2025/06/18 00:00:00 by ezekaj           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/fractol.h"
+
+
 
 int	color_psychedelic(int i, int max_i)
 {
@@ -23,19 +25,24 @@ int	color_psychedelic(int i, int max_i)
 	color.r = (int)(127.5 + 127.5 * sin(color.phase));
 	color.g = (int)(127.5 + 127.5 * sin(color.phase + 2.094));
 	color.b = (int)(127.5 + 127.5 * sin(color.phase + 4.188));
-	if (color.r < 0)
-		color.r = 0;
-	else if (color.r > 255)
-		color.r = 255;
-	if (color.g < 0)
-		color.g = 0;
-	else if (color.g > 255)
-		color.g = 255;
-	if (color.b < 0)
-		color.b = 0;
-	else if (color.b > 255)
-		color.b = 255;
+	clamp_color_values(&color);
 	return ((color.r << 24) | (color.g << 16) | (color.b << 8) | 0xFF);
+}
+
+int	color_grayscale(int i, int max_i)
+{
+	t_color	color;
+
+	if (i == max_i)
+		return (0x000000FF);
+	color.t = (double)i / max_i;
+	color.brightness = (int)(255 * (0.5 + 0.5 * cos(color.t * 10.0)));
+	if (color.brightness < 0)
+		color.brightness = 0;
+	else if (color.brightness > 255)
+		color.brightness = 255;
+	return ((color.brightness << 24) | (color.brightness << 16)
+		| (color.brightness << 8) | 0xFF);
 }
 
 int	colors(int i, int max_i, int color_scheme)
