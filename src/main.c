@@ -6,56 +6,58 @@
 /*   By: ezekaj <ezekaj@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 15:30:00 by ezekaj            #+#    #+#             */
-/*   Updated: 2025/05/18 21:52:04 by ezekaj           ###   ########.fr       */
+/*   Updated: 2025/05/19 01:30:00 by ezekaj           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fractol.h"
 
-
-
-static int	init_mlx(t_fractol *fractol)
+static int	init_mlx(t_fractol *f)
 {
-	fractol->mlx = mlx_init(WIDTH, HEIGHT, TITLE, 1);
-	if (!fractol->mlx)
+	f->mlx = mlx_init();
+	if (!f->mlx)
 		return (1);
-	fractol->img = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
-	if (!fractol->img)
-		return (mlx_terminate(fractol->mlx), 1);
-	mlx_set_setting(MLX_STRETCH_IMAGE, true);
+	f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, "fractol");
+	if (!f->win)
+		return (free(f->mlx), 1);
+	f->img = mlx_new_image(f->mlx, WIDTH, HEIGHT);
+	if (!f->img)
+		return (mlx_destroy_window(f->mlx, f->win), free(f->mlx), 1);
+	f->addr = mlx_get_data_addr(f->img, &f->bpp, &f->line_len, &f->endian);
 	return (0);
 }
 
-static void	setup_hooks(t_fractol *fractol)
+static void	setup_hooks(t_fractol *f)
 {
-	mlx_image_to_window(fractol->mlx, fractol->img, 0, 0);
-	mlx_key_hook(fractol->mlx, &handle_keys, fractol);
-	mlx_scroll_hook(fractol->mlx, &handle_scroll, fractol);
-	mlx_mouse_hook(fractol->mlx, &handle_mouse_click, fractol);
+	mlx_hook(f->win, 2, 1L << 0, handle_key, f);
+	mlx_hook(f->win, 4, 1L << 2, handle_mouse, f);
+	mlx_hook(f->win, 17, 0, handle_close, f);
 }
 
-static void	render_and_run(t_fractol *fractol)
+void	print_usage(void)
 {
-	if (fractol->use_threads)
-		threaded_fractal_render(fractol);
-	else
-		fractal_render(fractol);
-	mlx_loop_hook(fractol->mlx, &animation_loop, fractol);
-	mlx_loop(fractol->mlx);
-	mlx_terminate(fractol->mlx);
+	ft_putstr_fd("Usage: ./fractol [fractal_type] [params]\n\n", 1);
+	ft_putstr_fd("Fractal types:\n", 1);
+	ft_putstr_fd("  mandelbrot\n", 1);
+	ft_putstr_fd("  julia [c_real] [c_imag]\n\n", 1);
+	ft_putstr_fd("Examples:\n", 1);
+	ft_putstr_fd("  ./fractol mandelbrot\n", 1);
+	ft_putstr_fd("  ./fractol julia -0.7 0.27015\n", 1);
+	exit(0);
 }
 
 int	main(int ac, char **av)
 {
-	t_fractol	fractol;
+	t_fractol	f;
 
-	fractol.type = parse_args(ac, av);
-	if (!fractol.type)
+	f.type = parse_args(ac, av);
+	if (!f.type)
 		print_usage();
-	if (init_mlx(&fractol) != 0)
+	if (init_mlx(&f) != 0)
 		return (1);
-	init_fractol(&fractol, fractol.type, av);
-	setup_hooks(&fractol);
-	render_and_run(&fractol);
+	init_fractol(&f, f.type, av);
+	setup_hooks(&f);
+	fractal_render(&f);
+	mlx_loop(f.mlx);
 	return (0);
 }
