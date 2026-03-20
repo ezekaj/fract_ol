@@ -34,33 +34,18 @@
 # define SCHEME_GRAYSCALE 4
 # define NUM_SCHEMES 5
 
-# ifdef __APPLE__
-#  define KEY_ESC 53
-#  define KEY_UP 126
-#  define KEY_DOWN 125
-#  define KEY_LEFT 123
-#  define KEY_RIGHT 124
-#  define KEY_PLUS 24
-#  define KEY_MINUS 27
-#  define KEY_C 8
-#  define KEY_R 15
-#  define KEY_S 1
-#  define KEY_L 37
-#  define KEY_M 46
-# else
-#  define KEY_ESC 65307
-#  define KEY_UP 65362
-#  define KEY_DOWN 65364
-#  define KEY_LEFT 65361
-#  define KEY_RIGHT 65363
-#  define KEY_PLUS 61
-#  define KEY_MINUS 45
-#  define KEY_C 99
-#  define KEY_R 114
-#  define KEY_S 115
-#  define KEY_L 108
-#  define KEY_M 109
-# endif
+# define KEY_ESC 65307
+# define KEY_UP 65362
+# define KEY_DOWN 65364
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
+# define KEY_PLUS 61
+# define KEY_MINUS 45
+# define KEY_C 99
+# define KEY_R 114
+# define KEY_S 115
+# define KEY_L 108
+# define KEY_M 109
 # define MOUSE_LEFT 1
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5

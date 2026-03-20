@@ -26,15 +26,9 @@
 # define MANDELBROT 1
 # define JULIA 2
 
-# ifdef __APPLE__
-#  define KEY_ESC 53
-#  define KEY_PLUS 24
-#  define KEY_MINUS 27
-# else
-#  define KEY_ESC 65307
-#  define KEY_PLUS 61
-#  define KEY_MINUS 45
-# endif
+# define KEY_ESC 65307
+# define KEY_PLUS 61
+# define KEY_MINUS 45
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5
 # define MOUSE_LEFT 1

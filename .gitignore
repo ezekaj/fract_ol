@@ -1,43 +1,15 @@
 # Object files
 *.o
-*.ko
-*.obj
-*.elf
-
-# Precompiled Headers
-*.gch
-*.pch
 
 # Libraries
-*.lib
 *.a
-*.la
-*.lo
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+# Executable
 fractol
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+# Editor files
+*.swp
+*~
 
-# Build directories
-MLX42/build/
-build/
-
-# macOS specific
+# OS files
 .DS_Store
